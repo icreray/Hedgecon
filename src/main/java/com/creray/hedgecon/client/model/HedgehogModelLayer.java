@@ -34,12 +34,12 @@ public class HedgehogModelLayer {
         CubeListBuilder rightEarPart = CubeListBuilder.create()
                 .texOffs(6, 6)
                 .addBox(-1f, 0f, 0f, 1f, 2f, 0f);
-        body.addOrReplaceChild("right_ear", rightEarPart, PartPose.offset(-2.5f, -2.5f, -3f));
+        body.addOrReplaceChild("right_ear", rightEarPart, PartPose.offsetAndRotation(-2.5f, -2.5f, -3f, 0f, 0.349066f, 0f));
 
         CubeListBuilder leftEarPart = CubeListBuilder.create()
                 .texOffs(6, 6)
-                .addBox(1f, 0f, 0f, 1f, 2f, 0f);
-        body.addOrReplaceChild("left_ear", leftEarPart, PartPose.offset(1.5f, -2.5f, -3f));
+                .addBox(0f, 0f, 0f, 1f, 2f, 0f);
+        body.addOrReplaceChild("left_ear", leftEarPart, PartPose.offsetAndRotation( 2.5f, -2.5f, -3f, 0f, -0.349066f, 0f));
 
         // Legs
         CubeListBuilder legPart = CubeListBuilder.create()

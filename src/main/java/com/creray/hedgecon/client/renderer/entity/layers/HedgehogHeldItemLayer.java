@@ -3,7 +3,7 @@ package com.creray.hedgecon.client.renderer.entity.layers;
 import com.creray.hedgecon.client.model.HedgehogModel;
 import com.creray.hedgecon.world.entity.animal.hedgehog.Hedgehog;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -31,11 +31,16 @@ public class HedgehogHeldItemLayer extends RenderLayer<Hedgehog, HedgehogModel> 
         poseStack.translate(0, 1.046875, 0);
 
         // Rotate item by 90 degrees
-        poseStack.mulPose(Vector3f.XP.rotationDegrees(90));
+        poseStack.mulPose(Axis.XP.rotationDegrees(90));
+
+        // Sync item rotation with root
+        ModelPart root = model.root;
+        poseStack.mulPose(Axis.YP.rotation(root.zRot));
 
         // Sync item rotation with body
         ModelPart body = model.body;
-        poseStack.mulPose(Vector3f.ZN.rotation(body.zRot));
+        poseStack.mulPose(Axis.ZN.rotation(body.yRot));
+        poseStack.mulPose(Axis.XP.rotation(body.xRot));
 
         // Move item 2 pixels closer to face
         poseStack.translate(0, -0.125, 0);

@@ -1,15 +1,17 @@
 package com.creray.hedgecon.client.model;
 
+import com.creray.hedgecon.client.animation.definitions.HedgeconAnimation;
+import com.creray.hedgecon.util.AnimationUtils;
 import com.creray.hedgecon.world.entity.animal.hedgehog.Hedgehog;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.frog.FrogAi;
 
 @Environment(EnvType.CLIENT)
 public class HedgehogModel extends HierarchicalModel<Hedgehog> {
-    private final ModelPart root;
+    public final ModelPart root;
     public final ModelPart body;
     private final ModelPart nose;
     private final ModelPart rightEar;
@@ -37,18 +39,11 @@ public class HedgehogModel extends HierarchicalModel<Hedgehog> {
     }
 
     @Override
-    public void setupAnim(Hedgehog entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        final float walkAngleModifier = Mth.cos(limbAngle * 0.8f);
-        final float limbXRotation = walkAngleModifier * limbDistance;
-        final float reversedLimbPitch = -limbXRotation;
-
-        rightHindLeg.xRot = limbXRotation;
-        leftHindLeg.xRot = reversedLimbPitch;
-        rightFrontLeg.xRot = reversedLimbPitch;
-        leftFrontLeg.xRot = limbXRotation;
-
-        body.yRot = limbXRotation * 0.3f;
-
-        nose.xRot = Mth.cos(animationProgress * 0.8f) * 0.15f;
+    public void setupAnim(Hedgehog hedgehog, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+        root().getAllParts().forEach(ModelPart::resetPose);
+        float walkAnimationSpeedModifier = AnimationUtils.calculateWalkAnimationSpeedModifier(hedgehog);
+        animate(hedgehog.idleAnimationState, HedgeconAnimation.HEDGEHOG_IDLE, animationProgress);
+        animate(hedgehog.walkAnimationState, HedgeconAnimation.HEDGEHOG_WALK, animationProgress, walkAnimationSpeedModifier);
+        // animate(hedgehog.swimAnimationState, HedgeconAnimation.HEDGEHOG_SWIM, animationProgress);
     }
 }
