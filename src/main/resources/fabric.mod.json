@@ -11,10 +11,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.creray.hedgecon.Hedgecon"
+      "io.creray.hedgecon.Hedgecon"
     ],
     "client": [
-      "com.creray.hedgecon.client.HedgeconClient"
+      "io.creray.hedgecon.client.HedgeconClient"
     ]
   },
   "mixins": [
